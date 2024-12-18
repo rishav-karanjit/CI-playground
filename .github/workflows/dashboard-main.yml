@@ -1,0 +1,16 @@
+name: Trigger Dashboards
+
+on:
+  push:    # Trigger on pushes to any branch
+  pull_request: # Trigger on pull requests to any branch
+
+jobs:
+  generate:
+    uses: ./.github/workflows/dashboard-reusable.yml
+    permissions:
+      contents: write
+    strategy:
+      matrix:
+        repository: [aws/aws-encryption-sdk-dafny, aws/aws-cryptographic-material-providers-library]
+    with:
+      repository: ${{ matrix.repository }}
