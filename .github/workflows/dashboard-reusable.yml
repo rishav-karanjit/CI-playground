@@ -30,7 +30,7 @@ jobs:
               Issues and PRs for ${{ inputs.repository }}
             output:
               format: html
-              filename: dashboard/index.html
+              filename: index.html
             sections:
             - title: 'Issues Age stats'
               description: 'Open issues by age.'
