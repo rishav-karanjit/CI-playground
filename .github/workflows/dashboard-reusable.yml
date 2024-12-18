@@ -25,12 +25,12 @@ jobs:
         uses: ethomson/issue-dashboard@v1
         with:
           config: |
-            title: s2n-quic Issue/PR Dashboard
+            title: ${{ inputs.repository }} Issue/PR Dashboard
             description: |
-              Issues and PRs for s2n-quic
+              Issues and PRs for ${{ inputs.repository }}
             output:
               format: html
-              filename: index.html
+              filename: dashboard/index.html
             sections:
             - title: 'Issues Age stats'
               description: 'Open issues by age.'
@@ -39,52 +39,52 @@ jobs:
                 title: 'Age'
                 elements:
                 - title: '<7 days'
-                  issue_query: 'repo:aws/s2n-quic is:open is:issue created:>{{ date("-7 days") }}'
+                  issue_query: 'repo:aws/${{ inputs.repository }} is:open is:issue created:>{{ date("-7 days") }}'
                   color: 'green'
                 - title: '8-90 days'
-                  issue_query: 'repo:aws/s2n-quic is:open is:issue created:{{ date("-90 days") }}..{{ date("-7 days") }}'
+                  issue_query: 'repo:aws/${{ inputs.repository }} is:open is:issue created:{{ date("-90 days") }}..{{ date("-7 days") }}'
                   color: 'yellow'
                 - title: '>1 year labeled api'
-                  issue_query: 'repo:aws/s2n-quic is:open is:issue label:api created:<{{ date("-365 days") }}'
+                  issue_query: 'repo:aws/${{ inputs.repository }} is:open is:issue label:api created:<{{ date("-365 days") }}'
                   color: 'red'
                 - title: '>1 year labeled test'
-                  issue_query: 'repo:aws/s2n-quic is:open is:issue label:test created:<{{ date("-365 days") }}'
+                  issue_query: 'repo:aws/${{ inputs.repository }} is:open is:issue label:test created:<{{ date("-365 days") }}'
                   color: 'red'
                 - title: '>1 year labeled ci'
-                  issue_query: 'repo:aws/s2n-quic is:open is:issue label:ci created:<{{ date("-365 days") }}'
+                  issue_query: 'repo:aws/${{ inputs.repository }} is:open is:issue label:ci created:<{{ date("-365 days") }}'
                   color: 'red'
             - title: 'Issues'
               description: 'Issues with no comments'
               widgets:
               - type: 'number'
                 title: 'All Issues with zero comments'
-                issue_query: 'repo:aws/s2n-quic is:open is:issue comments:0'
+                issue_query: 'repo:aws/${{ inputs.repository }} is:open is:issue comments:0'
                 color: 'yellow'
               - type: 'number'
                 title: 'Issues with updates in the last 14 days'
-                issue_query: 'repo:aws/s2n-quic is:issue is:open updated:>{{ date("-14 days") }}'
+                issue_query: 'repo:aws/${{ inputs.repository }} is:issue is:open updated:>{{ date("-14 days") }}'
                 color: 'yellow'
               - type: 'number'
                 title: 'Issues needing prioritization'
-                issue_query: 'repo:aws/s2n-quic is:issue is:open -label:priority/low -label:priority/medium -label:priority/high -label:MSRV'
+                issue_query: 'repo:aws/${{ inputs.repository }} is:issue is:open -label:priority/low -label:priority/medium -label:priority/high -label:MSRV'
                 color: 'yellow'
             - title: 'Pull Requests'
               widgets:
               - type: 'number'
                 title: 'Ready to merge'
-                issue_query: 'repo:aws/s2n-quic is:open is:pr review:approved'
+                issue_query: 'repo:aws/${{ inputs.repository }} is:open is:pr review:approved'
                 color: 'green'
               - type: 'number'
                 title: 'No reviews- from dependabot PRs'
-                issue_query: 'repo:aws/s2n-quic is:open is:pr review:none author:app/dependabot'
+                issue_query: 'repo:aws/${{ inputs.repository }} is:open is:pr review:none author:app/dependabot'
                 color: 'red'
               - type: 'number'
                 title: 'PRs with changes requested'
-                issue_query: 'repo:aws/s2n-quic is:open is:pr review:changes_requested sort:created-asc -is:draft'
+                issue_query: 'repo:aws/${{ inputs.repository }} is:open is:pr review:changes_requested sort:created-asc -is:draft'
                 color: 'blue'
               - type: 'number'
                 title: 'PRs with zero interactions (opened by a human)'
-                issue_query: 'repo:aws/s2n-quic is:open is:pr interactions:0 sort:created-asc -author:app/dependabot -is:draft'
+                issue_query: 'repo:aws/${{ inputs.repository }} is:open is:pr interactions:0 sort:created-asc -author:app/dependabot -is:draft'
                 color: 'blue'
               - type: 'table'
                 title: '15 Oldest Pull Requests created by a human without a review'
@@ -93,13 +93,13 @@ jobs:
                   property: 'number'
                 - title: 'Description'
                   property: 'title'
-                issue_query: 'repo:aws/s2n-quic is:open is:pr review:none sort:created-asc -is:draft'
+                issue_query: 'repo:aws/${{ inputs.repository }} is:open is:pr review:none sort:created-asc -is:draft'
                 limit: 15
           token: ${{ github.token }}
 
       - name: Publish Documentation
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: .
+          folder: ./
           git-config-name: 'GitHub Actions'
           git-config-email: 'karanjitrishav4@github.com'
