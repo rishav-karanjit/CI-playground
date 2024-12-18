@@ -1,0 +1,44 @@
+name: Generate Dashboard
+
+on:
+  workflow_call:
+    inputs:
+      repository:
+        description: "Target repository name"
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ inputs.repository }}
+
+      - name: Check out GitHub Pages branch
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ inputs.repository }}
+          ref: 'gh-pages'
+          
+      - name: 'Generate Dashboard'
+        uses: ethomson/issue-dashboard@v1
+        with:
+          config: |
+            title: "rishav-karanjit/CI-playground Issue/PR Dashboard"
+            description: "Issues and PRs for rishav-karanjit/CI-playground"
+            output:
+              format: html
+              filename: index.html
+          token: ${{ github.token }}
+
+      - name: Publish Documentation
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ./
+          git-config-name: 'GitHub Actions'
+          git-config-email: 'karanjitrishav4@github.com'
