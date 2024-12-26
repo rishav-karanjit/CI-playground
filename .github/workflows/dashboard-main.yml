@@ -26,12 +26,10 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: 'gh-pages'
-      - name: Debug File Listing
-        run: ls -R dashboard
       - name: Publish Documentation
         run: |
           git add dashboard/index.html
           git config user.name 'Github Actions'
-          git config user.email 'nobody@nowhere'
+          git config user.email 'githubactions@users.noreply.github.com'
           git commit -m 'Documentation update' --allow-empty
           git push origin gh-pages
