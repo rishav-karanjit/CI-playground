@@ -96,10 +96,3 @@ jobs:
                 issue_query: 'repo:${{ inputs.repository }} is:open is:pr review:none sort:created-asc -is:draft'
                 limit: 15
           token: ${{ github.token }}
-
-      - name: Publish Documentation
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: ./
-          git-config-name: 'GitHub Actions'
-          git-config-email: 'karanjitrishav4@github.com'
