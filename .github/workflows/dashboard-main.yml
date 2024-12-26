@@ -11,7 +11,7 @@ jobs:
       contents: write
     strategy:
       matrix:
-        repository: [aws/aws-encryption-sdk-dafny, aws/aws-cryptographic-material-providers-library, aws/amazon-s3-encryption-client-java]
+        repository: [aws/amazon-s3-encryption-client-java]
     with:
       repository: ${{ matrix.repository }}
   publish:
@@ -25,6 +25,8 @@ jobs:
         with:
           ref: 'gh-pages'
           path: 'dashboard'
+      - name: Debug File Listing
+        run: ls -R dashboard
       - name: Publish Documentation
         run: |
           git add index.html
