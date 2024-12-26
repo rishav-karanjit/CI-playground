@@ -37,6 +37,6 @@ jobs:
               widgets:
               - type: 'number'
                 title: 'Issues with updates in the last 14 days'
-                issue_query: 'repo:${{ inputs.repository }} is:issue is:open updated:>{{ date("-14 days") }}'
+                issue_query: 'repo:${{ inputs.repository }} is:issue is:open updated:>{{ date("-60 days") }}'
                 color: 'yellow'
           token: ${{ github.token }}
