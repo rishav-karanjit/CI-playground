@@ -24,12 +24,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: 'gh-pages'
-          path: 'dashboard'
       - name: Debug File Listing
         run: ls -R dashboard
       - name: Publish Documentation
         run: |
-          git add index.html
+          git add dashboard/index.html
           git config user.name 'Github Actions'
           git config user.email 'nobody@nowhere'
           git commit -m 'Documentation update' --allow-empty
