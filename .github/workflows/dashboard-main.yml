@@ -14,3 +14,21 @@ jobs:
         repository: [aws/aws-encryption-sdk-dafny, aws/aws-cryptographic-material-providers-library, aws/amazon-s3-encryption-client-java]
     with:
       repository: ${{ matrix.repository }}
+  publish:
+    needs: generate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Check out GitHub Pages branch
+        uses: actions/checkout@v2
+        with:
+          ref: 'gh-pages'
+          path: 'dashboard'
+      - name: Publish Documentation
+        run: |
+          git add dashboard.html
+          git config user.name 'Github Actions'
+          git config user.email 'nobody@nowhere'
+          git commit -m 'Documentation update' --allow-empty
+          git push origin gh-pages
