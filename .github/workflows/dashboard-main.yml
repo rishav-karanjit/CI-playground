@@ -11,6 +11,6 @@ jobs:
       contents: write
     strategy:
       matrix:
-        repository: [aws/aws-encryption-sdk-dafny, aws/aws-cryptographic-material-providers-library]
+        repository: [aws/aws-encryption-sdk-dafny, aws/aws-cryptographic-material-providers-library, aws/amazon-s3-encryption-client-java]
     with:
       repository: ${{ matrix.repository }}
