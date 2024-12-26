@@ -27,7 +27,7 @@ jobs:
           path: 'dashboard'
       - name: Publish Documentation
         run: |
-          git add dashboard.html
+          git add index.html
           git config user.name 'Github Actions'
           git config user.email 'nobody@nowhere'
           git commit -m 'Documentation update' --allow-empty
