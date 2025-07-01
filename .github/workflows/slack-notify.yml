@@ -10,22 +10,11 @@ jobs:
     name: Leave a kind message after updates
     runs-on: ubuntu-latest
     steps:
-      - name: Debug - Check if secret exists
-        env:
-          super_secret: ${{ secrets.SECRET_NAME }}
-        run: |
-          echo $super_secret
-          if [ -n "$super_secret" ]; then
-            echo "Secret SLACK_WEBHOOK_URL is set"
-          else
-            echo "Secret SLACK_WEBHOOK_URL is NOT set"
-          fi
-
-      # - name: Send GitHub Action data to a Slack workflow
-      #   uses: slackapi/slack-github-action@v2.1.0
-      #   with:
-      #     webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
-      #     payload: |
-      #       {"text": "GitHub Action build result: ${{ job.status }}"}
-      #     payload-delimiter: "_"
-      #     webhook-type: webhook-trigger
+      - name: Send GitHub Action data to a Slack workflow
+        uses: slackapi/slack-github-action@v2.1.0
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          payload: |
+            {"text": "GitHub Action build result: ${{ job.status }}"}
+          payload-delimiter: "_"
+          webhook-type: webhook-trigger
