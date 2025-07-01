@@ -11,8 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Debug - Check if secret exists
+        env:
+          super_secret: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          if [ -n "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
+          if [ -n "$super_secret" ]; then
             echo "Secret SLACK_WEBHOOK_URL is set"
           else
             echo "Secret SLACK_WEBHOOK_URL is NOT set"
