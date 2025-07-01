@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Debug - Check if secret exists
         env:
-          super_secret: ${{ secrets.SLACK_WEBHOOK_URL }}
+          super_secret: ${{ secrets.SECRET_NAME }}
         run: |
           echo $super_secret
           if [ -n "$super_secret" ]; then
