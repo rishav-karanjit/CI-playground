@@ -11,6 +11,25 @@ jobs:
       contents: write
     strategy:
       matrix:
-        repository: [aws/aws-encryption-sdk-dafny, aws/aws-cryptographic-material-providers-library]
+        repository: [aws/amazon-s3-encryption-client-java]
     with:
       repository: ${{ matrix.repository }}
+  publish:
+    needs: generate
+    runs-on: ubuntu-latest
+    permissions: 
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Check out GitHub Pages branch
+        uses: actions/checkout@v2
+        with:
+          ref: 'gh-pages'
+      - name: Publish Documentation
+        run: |
+          git add dashboard/index.html
+          git config user.name 'Github Actions'
+          git config user.email 'githubactions@users.noreply.github.com'
+          git commit -m 'Documentation update' --allow-empty
+          git push origin gh-pages
