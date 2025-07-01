@@ -10,10 +10,9 @@ jobs:
     name: Leave a kind message after updates
     runs-on: ubuntu-latest
     steps:
-      - name: Greet the reader
+      - name: Send GitHub Action data to a Slack workflow
         uses: slackapi/slack-github-action@v2.1.0
         with:
-          webhook: ${{ secrets.SLACK_WEB_HOOK }}
+          payload-delimiter: "_"
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
           webhook-type: webhook-trigger
-          payload: |
-            repo: "Greetings!"
