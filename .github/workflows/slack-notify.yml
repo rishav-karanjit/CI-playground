@@ -13,7 +13,7 @@ jobs:
       - name: Greet the reader
         uses: slackapi/slack-github-action@v2.1.0
         with:
-          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook: ${{ secrets.SLACK_WEB_HOOK }}
           webhook-type: webhook-trigger
           payload: |
             repo: "Greetings!"
