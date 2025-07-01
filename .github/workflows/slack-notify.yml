@@ -10,10 +10,16 @@ jobs:
     name: Leave a kind message after updates
     runs-on: ubuntu-latest
     steps:
+      - name: Intentionally fail (for demo purposes)
+        run: |
+          echo "This step will fail intentionally"
+          exit 1
+          
       - name: Send GitHub Action data to a Slack workflow
+        if: failure()
         uses: slackapi/slack-github-action@v2.1.0
         with:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
           payload: |
-            {"repo": "MPL"}
+            {"repo": "MPL", "status": "failed", "message": "Workflow has failed!"}
           webhook-type: webhook-trigger
