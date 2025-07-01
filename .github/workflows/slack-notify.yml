@@ -15,6 +15,5 @@ jobs:
         with:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
           payload: |
-            {"text": "GitHub Action build result: ${{ job.status }}"}
-          payload-delimiter: "_"
+            {"repo": "MPL"}
           webhook-type: webhook-trigger
