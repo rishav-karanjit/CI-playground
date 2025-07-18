@@ -24,12 +24,6 @@ jobs:
   notify:
     needs: [print, fail]
     if: ${{ failure() }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send failure message to a Slack workflow
-        uses: slackapi/slack-github-action@v2.1.0
-        with:
-          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
-          payload: |
-            {"message": "MPL's daily CI failed!"}
-          webhook-type: webhook-trigger
+    uses: ./.github/workflows/slack-notification.yml
+    with:
+      message: "workflow failed"
