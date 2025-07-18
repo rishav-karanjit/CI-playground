@@ -22,6 +22,7 @@ jobs:
           exit 1
   
   notify:
+    needs: [print, fail]
     if: ${{ failure() }}
     runs-on: ubuntu-latest
     steps:
