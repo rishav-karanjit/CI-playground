@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: Issue Created Notification
+on:
+  issues:
+    types: [opened, reopened]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send failure message to a Slack workflow
+        uses: slackapi/slack-github-action@v2.1.0
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          payload: |
+            {"message": "MPL's daily CI failed!"}
+          webhook-type: webhook-trigger
