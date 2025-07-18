@@ -8,6 +8,10 @@ on:
         required: true
         type: string
         description: "Message to send to Slack"
+    secrets:
+        SLACK_WEBHOOK_URL:
+            required: true
+            description: "Slack webhook URL"
 
 jobs:
   notify:

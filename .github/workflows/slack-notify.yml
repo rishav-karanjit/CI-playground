@@ -27,3 +27,5 @@ jobs:
     uses: ./.github/workflows/slack-notification.yml
     with:
       message: "workflow failed"
+    secrets:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
