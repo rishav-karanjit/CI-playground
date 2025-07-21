@@ -14,7 +14,7 @@ jobs:
     with:
       message: "New github issue: ${{ github.event.issue.html_url }}"
     secrets:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_1 }}
         
   notify-comment:
     if: github.event_name == 'issue_comment'
@@ -22,4 +22,4 @@ jobs:
     with:
       message: "New comment on issue: ${{ github.event.comment.html_url }}"
     secrets:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_1 }}
