@@ -1,0 +1,33 @@
+name: Go Get Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: "Go package to fetch (e.g. github.com/pkg/errors)"
+        required: true
+        default: "github.com/pkg/errors"
+
+jobs:
+  go-get:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+
+      - name: Go Get Package
+        run: |
+          echo "Fetching package: ${{ github.event.inputs.package }}"
+          go get ${{ github.event.inputs.package }}
+
+      - name: Go Mod Tidy
+        run: go mod tidy
+
+      - name: Show go.mod
+        run: cat go.mod
