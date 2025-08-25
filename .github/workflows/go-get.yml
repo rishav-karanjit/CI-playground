@@ -6,7 +6,7 @@ on:
       package:
         description: "Go package to fetch (e.g. github.com/pkg/errors)"
         required: true
-        default: "github.com/pkg/errors"
+        default: "github.com/aws/aws-cryptographic-material-providers-library/releases/go/smithy-dafny-standard-library"
 
 jobs:
   go-get:
