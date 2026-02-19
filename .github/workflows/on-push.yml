@@ -1,0 +1,11 @@
+name: On Push
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Push detected! This workflow was triggered."
