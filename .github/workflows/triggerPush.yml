@@ -1,0 +1,20 @@
+name: Trigger Push
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Make a change
+        run: echo "Test $(date)" >> test.txt
+      - name: Commit and push
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add test.txt
+          git commit -m "Test push from workflow"
+          git push
