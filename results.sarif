@@ -12,7 +12,13 @@
               "id": "DUMMY-001",
               "name": "DummyVulnerability",
               "shortDescription": {
-                "text": "Dummy vulnerability"
+                "text": "Dummy dependency vulnerability"
+              },
+              "fullDescription": {
+                "text": "A dependency in go.mod has a dummy vulnerability."
+              },
+              "help": {
+                "text": "Upgrade the affected dependency."
               },
               "defaultConfiguration": {
                 "level": "error"
@@ -21,28 +27,83 @@
           ]
         }
       },
+
+      "artifacts": [
+        {
+          "location": {
+            "uri": "go.mod"
+          },
+          "description": {
+            "text": "Go module manifest"
+          },
+          "mimeType": "text/plain",
+          "roles": [
+            "analysisTarget"
+          ],
+          "sourceLanguage": "go",
+          "properties": {
+            "artifactType": "go-module",
+            "packageManager": "go"
+          }
+        }
+      ],
+
       "results": [
         {
           "ruleId": "DUMMY-001",
           "level": "error",
+          "kind": "fail",
           "message": {
-            "text": "This is a dummy vulnerability."
+            "text": "Dummy vulnerability found in a dependency declared in go.mod."
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "package.json"
+                  "uri": "go.mod"
                 },
                 "region": {
-                  "startLine": 1,
+                  "startLine": 5,
                   "startColumn": 1
                 }
+              },
+              "message": {
+                "text": "Vulnerable dependency"
               }
             }
-          ]
+          ],
+          "properties": {
+            "packageName": "example.com/dummy-package",
+            "installedVersion": "v1.0.0",
+            "fixedVersion": "v1.0.1",
+            "severity": "high"
+          }
         }
-      ]
+      ],
+
+      "invocations": [
+        {
+          "executionSuccessful": true,
+          "commandLine": "dummy-scanner scan .",
+          "exitCode": 0,
+          "exitCodeDescription": "Scan completed successfully",
+          "properties": {
+            "checksRun": 10,
+            "checksPassed": 9,
+            "checksFailed": 1,
+            "checksSkipped": 0,
+            "artifactsScanned": 1,
+            "artifactsSkipped": 0
+          }
+        }
+      ],
+
+      "properties": {
+        "scanType": "dependency",
+        "scannerVersion": "1.0.0",
+        "artifactsScanned": 1,
+        "artifactsSkipped": 0
+      }
     }
   ]
 }
