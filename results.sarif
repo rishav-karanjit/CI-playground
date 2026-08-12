@@ -7,21 +7,56 @@
         "driver": {
           "name": "DummySecurityScanner",
           "version": "1.0.0",
+          "semanticVersion": "1.0.0",
+          "fullName": "Dummy Security Scanner v1.0.0",
+          "informationUri": "https://example.com/scanner",
+          "organization": "Example Security",
+          "language": "en-US",
           "rules": [
             {
               "id": "DUMMY-001",
-              "name": "DummyVulnerability",
+              "name": "DummyDependencyVulnerability",
               "shortDescription": {
                 "text": "Dummy dependency vulnerability"
               },
               "fullDescription": {
-                "text": "A dependency in go.mod has a dummy vulnerability."
+                "text": "A dependency declared in go.mod has a dummy vulnerability."
               },
               "help": {
-                "text": "Upgrade the affected dependency."
+                "text": "Upgrade the affected dependency to a fixed version."
+              },
+              "helpUri": "https://example.com/rules/DUMMY-001",
+              "defaultConfiguration": {
+                "enabled": true,
+                "level": "error",
+                "rank": 90.0
+              },
+              "properties": {
+                "security-severity": "8.0",
+                "precision": "high",
+                "tags": [
+                  "security",
+                  "dependency",
+                  "vulnerability"
+                ]
+              }
+            },
+            {
+              "id": "DUMMY-002",
+              "name": "DummyTestFileFinding",
+              "shortDescription": {
+                "text": "Dummy test file finding"
+              },
+              "fullDescription": {
+                "text": "A dummy security finding in test.txt."
+              },
+              "help": {
+                "text": "Review the contents of the file."
               },
               "defaultConfiguration": {
-                "level": "error"
+                "enabled": true,
+                "level": "warning",
+                "rank": 50.0
               }
             }
           ]
@@ -43,7 +78,52 @@
           "sourceLanguage": "go",
           "properties": {
             "artifactType": "go-module",
-            "packageManager": "go"
+            "packageManager": "go",
+            "scanned": true,
+            "scanStatus": "completed"
+          }
+        },
+        {
+          "location": {
+            "uri": "test.txt"
+          },
+          "description": {
+            "text": "Test text file"
+          },
+          "mimeType": "text/plain",
+          "roles": [
+            "analysisTarget"
+          ],
+          "sourceLanguage": "text",
+          "properties": {
+            "artifactType": "text-file",
+            "scanned": true,
+            "scanStatus": "completed"
+          }
+        }
+      ],
+
+      "invocations": [
+        {
+          "executionSuccessful": true,
+          "commandLine": "dummy-scanner scan .",
+          "startTimeUtc": "2026-08-11T20:00:00Z",
+          "endTimeUtc": "2026-08-11T20:00:10Z",
+          "workingDirectory": {
+            "uri": "file:///workspace/"
+          },
+          "exitCode": 0,
+          "exitCodeDescription": "Scan completed successfully",
+          "machine": "github-runner",
+          "account": "github-actions",
+          "properties": {
+            "checksRun": 10,
+            "checksPassed": 8,
+            "checksFailed": 2,
+            "checksSkipped": 0,
+            "artifactsDiscovered": 2,
+            "artifactsScanned": 2,
+            "artifactsSkipped": 0
           }
         }
       ],
@@ -51,6 +131,7 @@
       "results": [
         {
           "ruleId": "DUMMY-001",
+          "ruleIndex": 0,
           "level": "error",
           "kind": "fail",
           "message": {
@@ -64,45 +145,103 @@
                 },
                 "region": {
                   "startLine": 5,
+                  "startColumn": 1,
+                  "endLine": 5,
+                  "endColumn": 50
+                }
+              },
+              "message": {
+                "text": "Vulnerable dependency declaration"
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "go.mod"
+                },
+                "region": {
+                  "startLine": 1,
                   "startColumn": 1
                 }
               },
               "message": {
-                "text": "Vulnerable dependency"
+                "text": "Go module manifest"
               }
             }
           ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "dummy-go-mod-line-001"
+          },
+          "fingerprints": {
+            "stableFingerprint": "dummy-stable-fingerprint-001"
+          },
+          "baselineState": "new",
           "properties": {
             "packageName": "example.com/dummy-package",
             "installedVersion": "v1.0.0",
             "fixedVersion": "v1.0.1",
+            "cve": "CVE-2026-00001",
+            "cvss": 8.0,
             "severity": "high"
           }
-        }
-      ],
-
-      "invocations": [
+        },
         {
-          "executionSuccessful": true,
-          "commandLine": "dummy-scanner scan .",
-          "exitCode": 0,
-          "exitCodeDescription": "Scan completed successfully",
+          "ruleId": "DUMMY-002",
+          "ruleIndex": 1,
+          "level": "warning",
+          "kind": "review",
+          "message": {
+            "text": "Dummy finding in test.txt."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "test.txt"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              },
+              "message": {
+                "text": "Dummy finding"
+              }
+            }
+          ],
           "properties": {
-            "checksRun": 10,
-            "checksPassed": 9,
-            "checksFailed": 1,
-            "checksSkipped": 0,
-            "artifactsScanned": 1,
-            "artifactsSkipped": 0
+            "category": "test"
           }
         }
       ],
 
+      "automationDetails": {
+        "id": "dummy-security-scan"
+      },
+
+      "originalUriBaseIds": {
+        "SRCROOT": {
+          "uri": "file:///workspace/",
+          "description": {
+            "text": "Repository root"
+          }
+        }
+      },
+
       "properties": {
-        "scanType": "dependency",
+        "scanId": "dummy-scan-001",
+        "scanType": "full",
         "scannerVersion": "1.0.0",
-        "artifactsScanned": 1,
-        "artifactsSkipped": 0
+        "artifactsDiscovered": 2,
+        "artifactsScanned": 2,
+        "artifactsSkipped": 0,
+        "checksRun": 10,
+        "checksPassed": 8,
+        "checksFailed": 2,
+        "checksSkipped": 0
       }
     }
   ]
