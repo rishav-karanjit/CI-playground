@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "DummySecurityScanner",
+          "version": "1.0.0",
+          "rules": [
+            {
+              "id": "DUMMY-001",
+              "name": "DummyVulnerability",
+              "shortDescription": {
+                "text": "Dummy vulnerability"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "DUMMY-001",
+          "level": "error",
+          "message": {
+            "text": "This is a dummy vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "package.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
