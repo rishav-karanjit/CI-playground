@@ -1,17 +1,17 @@
-name: Path Specific Workflow
+# name: Path Specific Workflow
 
-on:
-  push:
-    paths:
-      - 'pathA/**'
-      - '.github/workflows/path-specific.yml'
+# on:
+#   push:
+#     paths:
+#       - 'pathA/**'
+#       - '.github/workflows/path-specific.yml'
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run for path A
-        run: |
-          cd pathA
-          pwd
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+#       - name: Run for path A
+#         run: |
+#           cd pathA
+#           pwd
